@@ -27,7 +27,7 @@ export async function collectHardwareInfo() {
   const networkInfo = {
     type: netState.type,
     isConnected: netState.isConnected,
-    ipAddress: netState.details?.ipAddress ?? '0.0.0.0',
+    ipAddress: (netState.details && 'ipAddress' in netState.details) ? (netState.details as any).ipAddress : '0.0.0.0',
   };
 
   // ----- GPU (no generic JS API) -----------------------------------
