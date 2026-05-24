@@ -1,0 +1,41 @@
+# Node modules
+node_modules/
+
+# Expo directories
+.expo/
+web-build/
+
+# Android build and local files
+android/build/
+android/.gradle/
+android/app/build/
+android/local.properties
+*.apk
+*.aar
+*.keystore
+
+# iOS build and local files
+ios/build/
+ios/Pods/
+ios/.xcode.env.local
+*.xcworkspace
+*.xcodeproj
+
+# Environment variables & secrets
+.env
+.env.local
+.env.*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS files
+.DS_Store
+Thumbs.db
