@@ -10,7 +10,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "start": "node server.js"
+    "start": "node server.js",
+    "start-easy": "node run-project.js"
   },
   "dependencies": {
     "@expo/ngrok": "^4.1.3",
