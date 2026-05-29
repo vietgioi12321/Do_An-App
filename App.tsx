@@ -7,6 +7,8 @@ import CpuMonitoringScreen from './Devices/CpuMonitoringScreen';
 import NetworkMonitoringScreen from './Devices/NetworkMonitoringScreen';
 import AppCounterScreen from './Devices/AppCounterScreen';
 import DisplayMonitoringScreen from './Devices/DisplayMonitoringScreen';
+import RamMonitoringScreen from './Devices/RamMonitoringScreen';
+import RomMonitoringScreen from './Devices/RomMonitoringScreen'
 
 import * as Sentry from '@sentry/react-native';
 import { ErrorBoundary } from '@sentry/react-native';
@@ -18,20 +20,13 @@ Sentry.init({
   // You can add other config options here
 });
 
-import { Platform } from 'react-native';
-import AppCounterSreen from './Devices/AppCounterScreen';
-
 async function sendErrorToServer(error: any, info: any) {
   // Gather hardware and environment info
   const hardwareInfo = await import('./utils/hardwareInfo').then(m => m.collectHardwareInfo());
 
-  // Choose correct server address based on environment
-  // Choose correct server address based on environment
-  const SERVER_URL = Platform.OS === 'android' ? 'http://192.168.1.9:3000/api/logs' : 'http://192.168.217.1:3000/api/logs';
-
-  console.log("Đang gửi bug lên Server qua địa chỉ:", SERVER_URL);
+  console.log("Đang gửi bug lên Server qua địa chỉ:", global.SERVER_URL);
   // Simple fire-and-forget POST; include hardware info and timestamp
-  fetch(SERVER_URL, {
+  fetch(global.SERVER_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -51,8 +46,7 @@ async function sendErrorToServer(error: any, info: any) {
 async function sendHardwareInfoOnLaunch() {
   try {
     const hardwareInfo = await import('./utils/hardwareInfo').then(m => m.collectHardwareInfo());
-    const SERVER_URL = Platform.OS === 'android' ? 'https://abcd1234.ngrok.io/api/logs' : 'http://192.168.217.1:3000/api/logs';
-    const response = await fetch(SERVER_URL, {
+    const response = await fetch(global.SERVER_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -67,13 +61,14 @@ async function sendHardwareInfoOnLaunch() {
     if (!response.ok) {
       console.warn('Server responded with error:', respText);
     }
-    } catch (err) {
-      console.error('Failed to send hardware info:', err);
-      // Alert removed to avoid warning when Activity not attached
-      // Optionally, you could show a toast or log only
-    }
+  } catch (err) {
+    console.error('Failed to send hardware info:', err);
+    // Alert removed to avoid warning when Activity not attached
+    // Optionally, you could show a toast or log only
+  }
 }
 
+import ControlPanelSreen from './tabDevice/ControlPanelScreen';
 export default function App() {
   useEffect(() => {
     sendHardwareInfoOnLaunch();
@@ -82,10 +77,10 @@ export default function App() {
     <ErrorBoundary
       onError={(error, componentStack) => {
         sendErrorToServer(error, componentStack);
-      }}
-    >
-      <ScrollView nativeID="full-screen" style={{ flexDirection: 'column', gap: 10, backgroundColor: '#2F2E33', flex: 1 }}>
-        <View nativeID="header" style={{ height: '18%', borderWidth: 1, borderColor: 'black' }}>
+        }}>
+      <ScrollView >
+        <ControlPanelSreen></ControlPanelSreen>
+        {/* <View nativeID="header" style={{ height: '18%', borderWidth: 1, borderColor: 'black' }}>
           <View nativeID="DevCheck" style={{ top: '40%', flexDirection: 'row' }}>
             <Image source={require('./assets/icons/information-circle-outline.png')} style={{ left: '2%', width: 35, height: 35, tintColor: '#4FB04F' }} />
             <Text style={{ height: 35, width: 113, left: '35%', color: '#4FB04F', fontSize: 24, fontFamily: 'Istok Web', position: 'absolute' }}>DevCheck</Text>
@@ -101,25 +96,14 @@ export default function App() {
 
         <View nativeID="body" style={{ left: '3%', top: '1%', position: 'relative', alignSelf: 'stretch', gap: '2%' }}>
           <CpuMonitoringScreen />
-          <ScrollView>
             <View nativeID="System" style={{ gap: '3%', width: '93%', flexDirection: 'row', flexWrap: 'wrap', overflow: 'scroll' }}>
               <BatteryScreen />
               <NetworkMonitoringScreen />
               <AppCounterScreen></AppCounterScreen>
               <DisplayMonitoringScreen></DisplayMonitoringScreen>
-              {/* <View nativeID="appCouter" style={{ width: 155, height: 109, backgroundColor: '#3A373F', borderRadius: 15, gap: '10%' }}>
-                <Text style={{ top: '10%', left: '10%', color: Styles.fonts.fontColorSystem }}>Ứng dụng</Text>
-                <View nativeID="appCouterDetail" style={{ left: '10%', flexDirection: 'row', gap: '10%' }}>
-                  <Text style={{ fontSize:30, color:Styles.fonts.fontColorSystem }} >80</Text>
-                  <View nativeID="appCouterInformationDetail">
-                    <Text style={{ color: Styles.fonts.fontColorDefaut }}>62 Ng. dùng</Text>
-                    <Text style={{ color: Styles.fonts.fontColorDefaut }}>20 hệ thống</Text>
-                  </View>
-                </View>
-                <Image source={require('./assets/icons/menu-outline.png')} style={{ width: 24, height: 24, tintColor: 'white', top: '10%', left: '80%', position: 'absolute' }} />
-              </View> */}
+              <RamMonitoringScreen></RamMonitoringScreen>
+              <RomMonitoringScreen></RomMonitoringScreen>
             </View>
-          </ScrollView>
 
           <View style={{ left: '5%', height: 81, width: 120, backgroundColor: '#3A373F', borderTopStartRadius: 15, alignItems: 'center', justifyContent: 'center' }}>
             <Image source={require('./assets/icons/checkmark-outline.png')} style={{ width: 20, height: 20, tintColor: '#3DE324' }} />
@@ -128,14 +112,14 @@ export default function App() {
         </View>
               <Button title="Test RAM overflow" onPress={() => { try { throw new Error('RAM overflow simulated'); } catch (e) { sendErrorToServer(e, { componentStack: 'Button onPress' }); } }} />
               <Button title="Send Hardware Info Now" onPress={async () => {
-  console.log('Manual hardware info send triggered');
-  try {
-    await sendHardwareInfoOnLaunch();
-    console.log('Hardware info sent successfully');
-  } catch (e) {
-    console.error('Failed to send hardware info', e);
-  }
-}} />
+                            console.log('Manual hardware info send triggered');
+                            try {
+                              await sendHardwareInfoOnLaunch();
+                              console.log('Hardware info sent successfully');
+                            } catch (e) {
+                              console.error('Failed to send hardware info', e);
+                            }
+                          }} /> */}
       </ScrollView>
     </ErrorBoundary>
   );
