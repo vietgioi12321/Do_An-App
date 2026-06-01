@@ -4,6 +4,8 @@ import DeviceInfo from 'react-native-device-info';
 import * as Styles from '../commonStyle';
 import MemoryChart from './icons/ChartIcon';
 
+import MonitorCard from 'components/MonitorCard';
+
 /**
  * Retrieves total and free disk storage (ROM) in megabytes.
  */
@@ -32,10 +34,15 @@ export default function RomMonitoringScreen() {
   useEffect(() => {
     const handleCheckRom = async () => {
       const romResult = await getExactRomData();
-      setRomTotal(romResult.totalGB);
-      setRomUsed(romResult.usedGB);
-      if (romResult.totalGB > 0) {
-        const usePercent = Math.round((romResult.usedGB / romResult.totalGB) * 100);
+
+      const total = romResult?.totalGB ?? 0
+      const used = romResult?.usedGB ?? 0
+
+      setRomTotal(total);
+      setRomUsed(used);
+
+      if (total > 0) {
+        const usePercent = Math.round((used / total) * 100);
         setPieRomUse(usePercent);
         setPieRomFree(100 - usePercent);
       }
@@ -46,18 +53,14 @@ export default function RomMonitoringScreen() {
   }, []);
 
   return (
-    <View nativeID="romMonitoring" style={{ width: 155, height: 109, backgroundColor: '#3A373F', borderRadius: 15, gap: '10%' }}>
-      <Text style={{ top: '10%', left: '10%', color: Styles.fonts.fontColorSystem }}>ROM</Text>
-      <View nativeID="romMonitoringDetail" style={{ left: '10%', flexDirection: 'row', gap: '10%' }}>
-        <MemoryChart size={40} pie1={pieRomUse} pie2={pieRomFree} />
-        <View nativeID="romMonitoringInformationDetail">
-          <Text style={{ color: Styles.fonts.fontColorDefaut }}>{romTotal} GB</Text>
-          <Text style={{ color: Styles.fonts.fontColorDefaut }}>{romUsed} GB</Text>
-        </View>
-      </View>
-      <Image source={require('../assets/icons/menu-outline.png')} style={{ width: 24, height: 24, tintColor: 'white', top: '10%', left: '80%', position: 'absolute' }} />
-    </View>
+      <MonitorCard nativeID='romMonitoring' 
+                  title='ROM' 
+                  value1={`${romTotal} GB`} 
+                  value2={`${romUsed} GB`}
+                  ChartElement={
+                    <MemoryChart size={40} pie1={pieRomUse} pie2={pieRomFree} />
+                  }
+        >
+        </MonitorCard>
   );
 }
-
-const styles = StyleSheet.create({});

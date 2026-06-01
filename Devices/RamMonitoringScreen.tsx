@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
+import MonitorCard from 'components/MonitorCard';
+import AppIcons from '@icons';
 import DeviceInfo from 'react-native-device-info';
 import RNFS from 'react-native-fs';
 import * as Styles from '../commonStyle';
@@ -81,11 +83,14 @@ export default function RamMonitoringScreen(){
         const handleCheckRam = async () => {
             const ramResult = await getExactRamData(); 
             
-            setRamTotal(ramResult.totalGB);
-            setRamUse(ramResult.usedGB);
+            const total = ramResult?.totalGB ?? 0;
+            const used = ramResult?.usedGB ?? 0;
             
-            if (ramResult.totalGB > 0) {
-                const usePercent = Math.round((ramResult.usedGB / ramResult.totalGB) * 100);
+            setRamTotal(total);
+            setRamUse(used);
+
+            if (total > 0) {
+                const usePercent = Math.round((used / total) * 100);
                 setPieRamUse(usePercent);
                 setPieRamFree(100 - usePercent);
             }
@@ -98,16 +103,10 @@ export default function RamMonitoringScreen(){
     }, []);
 
     return(
-        <View nativeID="ramMonitoring" style={{ width: 155, height: 109, backgroundColor: '#3A373F', borderRadius: 15, gap: '10%' }}>
-            <Text style={{ top: '10%', left: '10%', color: Styles.fonts.fontColorSystem }}>RAM</Text>
-            <View nativeID="ramMonitoringDetail" style={{ left: '10%', flexDirection: 'row', gap: '10%' }}>
-                <MemoryChart size={40} pie1={pieRamUse} pie2={pieRamFree}></MemoryChart>
-                <View nativeID="ramMonitoringInformationDetail">
-                <Text style={{ color: Styles.fonts.fontColorDefaut }}>{ramTotal} GB</Text>
-                <Text style={{ color: Styles.fonts.fontColorDefaut }}>{ramUse} GB</Text>
-                </View>
-            </View>
-            <Image source={require('../assets/icons/menu-outline.png')} style={{ width: 24, height: 24, tintColor: 'white', top: '10%', left: '80%', position: 'absolute' }} />
-        </View>
+      <MonitorCard nativeID='ramMonitoring' title='RAM' value1={`${ramTotal} GB`} value2={`${ramUse} GB`}
+                  ChartElement={
+                    <MemoryChart size={40} pie1={pieRamUse} pie2={pieRamFree}></MemoryChart>
+                  }>
+      </MonitorCard>
     );
 }

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Text, View,Image } from 'react-native';
 import {Dimensions, PixelRatio} from 'react-native'
+import MonitorCard from 'components/MonitorCard';
+import AppIcons from '@icons';
 // import DeviceInfo from 'react-native-device-info'; // removed, using native module
 import * as Device from 'expo-device'; // Sử dụng thư viện chính chủ Expo
 import { GLView } from 'expo-gl';
@@ -52,7 +54,7 @@ export default function DisplayMonitoringScreen(){
                 // ==========================================
                 // 3. TẦN SỐ QUÉT THỰC TẾ (Đo trực tiếp tốc độ quét của tấm nền máy đó)
                 // ==========================================
-                if (global.requestAnimationFrame) {
+                if (typeof global.requestAnimationFrame === 'function') {
                     let start = performance.now();
                     let frames = 0;
                     
@@ -100,17 +102,10 @@ export default function DisplayMonitoringScreen(){
     }, []);
 
     return(
-        <View nativeID="displayMonitor" style={{ width: 155, height: 109, backgroundColor: '#3A373F', borderRadius: 15, gap: '10%' }}>
-            <Text style={{ top: '10%', left: '10%', color: Styles.fonts.fontColorSystem }}>Hiển thị</Text>
-            <View nativeID="displayMonitorDetail" style={{ left: '10%', flexDirection: 'row', gap: '10%' }}>
-                <Image source={require('../assets/icons/phone-portrait-outline.png')} style={{tintColor:Styles.fonts.fontColorSystem,width:40,height:40 }} />
-                <View nativeID="displayMonitorInformationDetail" style={{flexShrink: 1}}>
-                <Text style={{ color: Styles.fonts.fontColorDefaut }}>{gpuName}</Text>
-                <Text style={{ color: Styles.fonts.fontColorDefaut }}>{resolution} {refreshRate}</Text>
-                {/* 🌟 CẬP NHẬT STYLE MỚI ĐỂ ÉP ĐỒ HỌA HOẠT ĐỘNG */}
-                </View>
-            </View>
-            <Image source={require('../assets/icons/menu-outline.png')} style={{ width: 24, height: 24, tintColor: 'white', top: '10%', left: '80%', position: 'absolute' }} />
-        </View>
+        <MonitorCard nativeID='displayMonitor' title='Hiển thị' value1={gpuName} value2={`${resolution} ${refreshRate}`}
+                  ChartElement={
+                    <Image source={AppIcons.phonePortrait} style={{tintColor:Styles.fonts.fontColorSystem,width:40,height:40 }} />
+                  }>
+        </MonitorCard>
     )
 }

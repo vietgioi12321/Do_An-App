@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View,Image } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
+import MonitorCard from 'components/MonitorCard';
+import AppIcons from '@icons';
 import * as Styles from '../commonStyle';
 
 export default function AppCounterScreen() {
@@ -46,31 +48,10 @@ export default function AppCounterScreen() {
   }, []);
 
   return (
-    <View nativeID="appCouter" style={{ width: 155, height: 109, backgroundColor: '#3A373F', borderRadius: 15, gap: '10%' }}>
-      <Text style={{ top: '10%', left: '10%', color: Styles.fonts.fontColorSystem }}>Ứng dụng</Text>
-      <View nativeID="appCouterDetail" style={{ left: '10%', flexDirection: 'row', gap: '10%' }}>
-        <Text style={{ fontSize:25, color:Styles.fonts.fontColorSystem }} >{totalApps}</Text>
-        <View nativeID="appCouterInformationDetail">
-          <Text style={{ color: Styles.fonts.fontColorDefaut }}>{userApps} Ng. dùng</Text>
-          <Text style={{ color: Styles.fonts.fontColorDefaut }}>{systemApps} Hệ thống</Text>
-        </View>
-      </View>
-      <Image source={require('../assets/icons/menu-outline.png')} style={{ width: 24, height: 24, tintColor: 'white', top: '10%', left: '80%', position: 'absolute' }} />
-    </View>
+    <MonitorCard nativeID='appCouter' title='Ứng dụng' value1={`${userApps} Ng. dùng`} value2={`${systemApps} Hệ thống`}
+                  ChartElement={
+                    <Text style={{ fontSize:25, color:Styles.fonts.fontColorSystem }} >{totalApps}</Text>
+                  }>
+    </MonitorCard>
   );
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#1A191E', justifyContent: 'center', padding: 16 },
-  appCard: { backgroundColor: '#2D2C34', borderRadius: 12, padding: 16, width: 260 },
-  headerRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 },
-  cardTitle: { color: '#4CAF50', fontSize: 16, fontWeight: '600' },
-  menuIcon: { color: '#AAAAAA', fontSize: 18 },
-  contentRow: { flexDirection: 'row', alignItems: 'center', marginTop: 5 },
-  totalColumn: { alignItems: 'center', marginRight: 24, minWidth: 60 },
-  totalNumber: { color: '#4CAF50', fontSize: 44, fontWeight: 'bold', lineHeight: 46 },
-  totalSub: { color: '#4CAF50', fontSize: 11, fontWeight: 'bold', marginTop: 2 },
-  detailsColumn: { justifyContent: 'center', gap: 6 },
-  detailText: { color: '#E5E5E7', fontSize: 16 },
-  boldNumber: { fontWeight: 'bold', fontSize: 18 }
-});

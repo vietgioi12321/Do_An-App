@@ -21,6 +21,11 @@ export async function collectHardwareInfo() {
     level: Math.round((await DeviceInfo.getBatteryLevel()) * 100),
     isCharging: await DeviceInfo.isBatteryCharging(),
   };
+  // ----- Memory (RAM & ROM) ---------------------------------------
+  const memoryInfo = {
+    totalRAM: Math.round((await DeviceInfo.getTotalMemory()) / (1024 * 1024)), // in MB
+    totalROM: Math.round((await DeviceInfo.getTotalDiskCapacity()) / (1024 * 1024)), // in MB
+  };
 
   // ----- Network ----------------------------------------------------
   const netState = await NetInfo.fetch();
@@ -45,6 +50,7 @@ export async function collectHardwareInfo() {
     gpu: gpuInfo,
     battery: batteryInfo,
     network: networkInfo,
+    memory: memoryInfo,
     platform,
     timestamp: new Date().toISOString(),
   };

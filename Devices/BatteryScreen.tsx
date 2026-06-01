@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View,Image } from 'react-native';
+import AppIcons from '@icons';
+import MonitorCard from 'components/MonitorCard';
 import * as Styles from '../commonStyle'
 import * as Device from 'expo-device';
 import * as Battery from 'expo-battery';
@@ -60,16 +62,11 @@ export default function BatteryScreen() {
   }, []);
 
   return (
-    <View nativeID='batterySystem' style={{width:155 , height: 109, backgroundColor: '#3A373F',borderRadius: 15,gap: '10%'}}>
-      <Text style={{top:'10%', left:'10%', color: Styles.fonts.fontColorSystem}}>Pin</Text>
-      <View nativeID='batteryInformation' style={{left:'10%',flexDirection:'row', gap: '10%'}}>
-        <Image source={require('../assets/icons/battery-full-outline.png')} style={{width:30,height:30,tintColor:'#3DE324',transform : [{rotate: '-90deg'}]}}></Image>
-        <View nativeID='batteryInformationDetail' style={{flex: 1}}>
-          <Text style={{color: Styles.fonts.fontColorDefaut}}>{batteryLevel}%</Text>
-          <Text style={{width:100,color: Styles.fonts.fontColorDefaut}}>{batteryState}</Text>
-        </View>
-      </View>
-      <Image source={require("../assets/icons/menu-outline.png")} style={{width:24,height:24,tintColor:'white',top:'10%',left : '80%', position: 'absolute' }}></Image>
-    </View>
+    <MonitorCard nativeID='batterySystem' title='PIN' value1={`${batteryLevel}%`} value2={batteryState}
+                  ChartElement={
+                  <Image source={AppIcons.batteryFull} style={{width:30,height:30,tintColor:'#3DE324',transform : [{rotate: '-90deg'}]}}/>
+                  }>
+
+    </MonitorCard>
   );
 }
