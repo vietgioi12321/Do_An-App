@@ -6,7 +6,7 @@ import AppIcons from '@icons';
 // import DeviceInfo from 'react-native-device-info'; // removed, using native module
 import * as Device from 'expo-device'; // Sử dụng thư viện chính chủ Expo
 import { GLView } from 'expo-gl';
-import * as Styles from '../commonStyle';
+import * as Styles from '../config/commonStyle';
 
 export default function DisplayMonitoringScreen(){
     const [resolution, setResolution] = useState<string>('');

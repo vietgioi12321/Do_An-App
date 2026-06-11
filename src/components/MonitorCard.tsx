@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text,Image } from 'react-native';
-import * as Styles from '../commonStyle';
+import * as Styles from '../../assets/styles/configStyle';
 import AppIcons from "@icons"
 
 

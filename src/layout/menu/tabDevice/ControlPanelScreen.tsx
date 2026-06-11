@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {View,Text,Button,Image, ScrollView} from 'react-native'
-import * as Styles from '../../commonStyle';
+import * as Styles from '../../config/commonStyle';
 import AppIcons from "@icons";
 
 

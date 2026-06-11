@@ -1,4 +1,4 @@
-import { SERVER_URL } from 'config';
+import { SERVER_URL } from '../config/config.js';
 import { logErrorInfo } from '../utils/logError';
 
 

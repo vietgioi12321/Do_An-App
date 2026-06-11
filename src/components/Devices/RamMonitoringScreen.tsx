@@ -4,7 +4,7 @@ import MonitorCard from 'components/MonitorCard';
 import AppIcons from '@icons';
 import DeviceInfo from 'react-native-device-info';
 import RNFS from 'react-native-fs';
-import * as Styles from '../commonStyle';
+import * as Styles from '../config/commonStyle';
 import MemoryChart from './icons/ChartIcon';
 
 export const getExactRamData = async () => {

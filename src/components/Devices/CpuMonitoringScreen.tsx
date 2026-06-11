@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image} from 'react-native';
-import * as Styles from '../commonStyle';
+import * as Styles from '../config/commonStyle';
 import RNFS from 'react-native-fs';
 
 // Định nghĩa kiểu dữ liệu cho 8 nhân CPU
