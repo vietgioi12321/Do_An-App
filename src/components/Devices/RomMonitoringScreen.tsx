@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import DeviceInfo from 'react-native-device-info';
-import MemoryChart from './icons/ChartIcon';
+import MemoryChart from '@/assets/icons/ChartIcon';
 
 import MonitorCard from '../MonitorCard';
 

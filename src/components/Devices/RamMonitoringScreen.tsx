@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import MonitorCard from '../MonitorCard';
 
 import DeviceInfo from 'react-native-device-info';
 import RNFS from 'react-native-fs';
-import MemoryChart from './icons/ChartIcon';
+import MemoryChart from '@/assets/icons/ChartIcon';
+import { sendAppError } from '../../services/sendDeviceServece';
 
 export const getExactRamData = async () => {
     try {
@@ -77,6 +78,9 @@ export default function RamMonitoringScreen(){
     const [pieRamUse, setPieRamUse] = useState(0);
     const [pieRamFree, setPieRamFree] = useState(100);
 
+    // Lưu trữ thời điểm cuối cùng gửi cảnh báo để tránh spam API liên tục (giới hạn 1 phút / lần)
+    const lastAlertTime = useRef<number>(0);
+
     useEffect(() => {
         const handleCheckRam = async () => {
             const ramResult = await getExactRamData(); 
@@ -91,6 +95,18 @@ export default function RamMonitoringScreen(){
                 const usePercent = Math.round((used / total) * 100);
                 setPieRamUse(usePercent);
                 setPieRamFree(100 - usePercent);
+
+                // Cảnh báo khi RAM đã sử dụng vượt quá 90%
+                if (usePercent >= 90) {
+                    const now = Date.now();
+                    if (now - lastAlertTime.current > 60000) { // Lọc chống spam, chỉ gửi tối đa 1 lần/phút
+                        lastAlertTime.current = now;
+                        sendAppError(
+                            "RAM_OVERFLOW",
+                            `Cảnh báo: Thiết bị bị quá tải RAM! Đã sử dụng: ${used} GB / Tổng dung lượng: ${total} GB (${usePercent}%).`
+                        );
+                    }
+                }
             }
         };
 

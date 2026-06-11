@@ -11,7 +11,7 @@ export async function collectHardwareInfo() {
   const cpuInfo = {
     brand: await DeviceInfo.getBrand(),
     model: await DeviceInfo.getModel(),
-    // Android only – number of logical processors (fallback to 0)
+    
     cores: (await (DeviceInfo as any).getNumberOfProcessors?.()) ?? 0,
   };
 
