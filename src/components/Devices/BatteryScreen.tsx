@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View,Image } from 'react-native';
+import { Image } from 'react-native';
 import AppIcons from '@icons';
-import MonitorCard from 'components/MonitorCard';
-import * as Styles from '../config/commonStyle'
+import MonitorCard from '../MonitorCard';
 import * as Device from 'expo-device';
 import * as Battery from 'expo-battery';
 

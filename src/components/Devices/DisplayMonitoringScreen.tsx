@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View,Image } from 'react-native';
+import { Image } from 'react-native';
 import {Dimensions, PixelRatio} from 'react-native'
-import MonitorCard from 'components/MonitorCard';
+import MonitorCard from '../MonitorCard';
 import AppIcons from '@icons';
 // import DeviceInfo from 'react-native-device-info'; // removed, using native module
 import * as Device from 'expo-device'; // Sử dụng thư viện chính chủ Expo
-import { GLView } from 'expo-gl';
-import * as Styles from '../config/commonStyle';
+import * as Styles from '@/assets/styles/configStyle';
 
 export default function DisplayMonitoringScreen(){
     const [resolution, setResolution] = useState<string>('');

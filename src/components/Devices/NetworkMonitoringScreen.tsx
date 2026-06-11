@@ -1,7 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View,Image } from 'react-native';
-import * as Styles from '../config/commonStyle';
-import MonitorCard from 'components/MonitorCard';
+import { Image } from 'react-native';
+import MonitorCard from '../MonitorCard';
 import AppIcons from '@icons';
 // 1. Nhập thư viện kiểm tra mạng
 import { useNetInfo } from "@react-native-community/netinfo";

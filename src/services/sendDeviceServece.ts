@@ -1,4 +1,4 @@
-import { SERVER_URL } from '../config/config.js';
+import { API_ROUTES } from '../config/config';
 import { logErrorInfo } from '../utils/logError';
 
 
@@ -6,9 +6,9 @@ export async function sendErrorToServer(error: any, info: any) {
     // Gather hardware and environment info
     const hardwareInfo = await import('../utils/hardwareInfo').then(m => m.collectHardwareInfo());
   
-    console.log("Đang gửi bug lên Server qua địa chỉ:", SERVER_URL);
+    console.log("Đang gửi bug lên Server qua địa chỉ:", API_ROUTES.testHello);
     // Simple fire-and-forget POST; include hardware info and timestamp
-    fetch(SERVER_URL, {
+    fetch(API_ROUTES.testHello, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -28,7 +28,7 @@ export async function sendErrorToServer(error: any, info: any) {
 export async function sendHardwareInfoOnLaunch() {
     try {
         const hardwareInfo = await import('../utils/hardwareInfo').then(m => m.collectHardwareInfo());
-        const response = await fetch(SERVER_URL, {
+        const response = await fetch(API_ROUTES.testHello, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -45,7 +45,5 @@ export async function sendHardwareInfoOnLaunch() {
         }
     } catch (err) {
         console.error('Failed to send hardware info:', err);
-        // Alert removed to avoid warning when Activity not attached
-        // Optionally, you could show a toast or log only
     }
 }

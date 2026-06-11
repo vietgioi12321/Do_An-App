@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
-import MonitorCard from 'components/MonitorCard';
-import AppIcons from '@icons';
+import MonitorCard from '../MonitorCard';
+
 import DeviceInfo from 'react-native-device-info';
 import RNFS from 'react-native-fs';
-import * as Styles from '../config/commonStyle';
 import MemoryChart from './icons/ChartIcon';
 
 export const getExactRamData = async () => {

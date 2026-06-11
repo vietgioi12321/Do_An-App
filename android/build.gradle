@@ -12,11 +12,6 @@ buildscript {
   }
 }
 
-// Thêm hoặc sửa khối ext ở đây nếu đã có sẵn:
-ext {
-    ndkVersion = "27.1.12297006"
-}
-
 allprojects {
   repositories {
     google()
@@ -25,5 +20,25 @@ allprojects {
   }
 }
 
+ext {
+    compileSdkVersion = 36
+    buildToolsVersion = "36.1.0"
+    ndkVersion = "27.1.12297006"
+    minSdkVersion = 24
+    targetSdkVersion = 36
+}
 apply plugin: "expo-root-project"
 apply plugin: "com.facebook.react.rootproject"
+
+subprojects {
+    plugins.withId('com.android.application') {
+        android {
+            buildToolsVersion "36.1.0"
+        }
+    }
+    plugins.withId('com.android.library') {
+        android {
+            buildToolsVersion "36.1.0"
+        }
+    }
+}

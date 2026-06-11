@@ -1,19 +1,18 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {View,Text,Button,Image, ScrollView} from 'react-native'
-import * as Styles from '../../config/commonStyle';
+import * as Styles from '@/assets/styles/configStyle';
 import AppIcons from "@icons";
 
 
-import BatteryScreen from '../../Devices/BatteryScreen';
-import CpuMonitoringScreen from '../../Devices/CpuMonitoringScreen';
-import NetworkMonitoringScreen from '../../Devices/NetworkMonitoringScreen';
-import AppCounterScreen from '../../Devices/AppCounterScreen';
-import DisplayMonitoringScreen from '../../Devices/DisplayMonitoringScreen';
-import RamMonitoringScreen from '../../Devices/RamMonitoringScreen';
-import RomMonitoringScreen from '../../Devices/RomMonitoringScreen';
+import BatteryScreen from '../../../components/Devices/BatteryScreen';
+import CpuMonitoringScreen from '../../../components/Devices/CpuMonitoringScreen';
+import NetworkMonitoringScreen from '../../../components/Devices/NetworkMonitoringScreen';
+import AppCounterScreen from '../../../components/Devices/AppCounterScreen';
+import DisplayMonitoringScreen from '../../../components/Devices/DisplayMonitoringScreen';
+import RamMonitoringScreen from '../../../components/Devices/RamMonitoringScreen';
+import RomMonitoringScreen from '../../../components/Devices/RomMonitoringScreen';
 
-import { sendHardwareInfoOnLaunch } from "services/errorServece";
-import { sendErrorToServer } from "services/errorServece";
+import { sendHardwareInfoOnLaunch, sendErrorToServer } from "../../../services/sendDeviceServece";
 
 export default function ControlPanelSreen(){
     return(

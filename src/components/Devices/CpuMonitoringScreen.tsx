@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image} from 'react-native';
-import * as Styles from '../config/commonStyle';
+import * as Styles from '@/assets/styles/configStyle';
 import RNFS from 'react-native-fs';
 
 // Định nghĩa kiểu dữ liệu cho 8 nhân CPU
@@ -156,7 +156,7 @@ export default function CpuMonitoringScreen() {
           backgroundColor: '#3A373F', borderRadius: 15}}>
           <Text style={{color: Styles.fonts.fontColorDefaut}}>CPU: {cpuTemp}C</Text>
 <Text style={{color: Styles.fonts.fontColorDefaut}}>GPU: {gpuTemp}C</Text>
-          <Image source={require("../assets/icons/menu-outline.png")} style={{left : '90%',width:24,height:24,tintColor:'white', position: 'absolute' }}></Image>
+          <Image source={require("@/assets/icons/menu-outline.png")} style={{left : '90%',width:24,height:24,tintColor:'white', position: 'absolute' }}></Image>
         </View>
       </View>
   );

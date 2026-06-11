@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
-import {getTabStyle} from '../../assets/styles/MenuStyle'
+import {getTabStyle} from '@/assets/styles/MenuStyle'
 
 export interface MenuScreenProps {
   activeTab: 'dashboard' | 'hardware' | 'system' | 'battery';

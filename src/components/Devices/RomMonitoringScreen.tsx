@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
-import * as Styles from '../config/commonStyle';
 import MemoryChart from './icons/ChartIcon';
 
-import MonitorCard from 'components/MonitorCard';
+import MonitorCard from '../MonitorCard';
 
 /**
  * Retrieves total and free disk storage (ROM) in megabytes.

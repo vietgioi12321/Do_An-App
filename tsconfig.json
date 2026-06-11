@@ -4,7 +4,8 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
-      "@icons": ["./assets/icons/AppIcon.tsx"]
+      "@icons": ["./assets/icons/AppIcon.tsx"],
+      "@/*": ["./*"]
     }
   }
 }

@@ -11,7 +11,7 @@ import SystemScreen from './layout/menu/tabDevice/SystemScreen';
 import * as Style from '../assets/styles/configStyle'
 
 import { ErrorBoundary } from '@sentry/react-native';
-import { sendErrorToServer } from './services/errorServece';
+import { sendErrorToServer } from './services/sendDeviceServece';
 
 export default function App() {
   const [currentTab, setCurrentTab] = useState<MenuScreenProps['activeTab']>('dashboard')

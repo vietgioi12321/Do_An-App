@@ -10,6 +10,7 @@ module.exports = function (api) {
             alias: {
               // Định danh @icons trỏ thẳng tới file quản lý icon của bạn
               '@icons': './assets/icons/AppIcon.tsx',
+              '@': './',
             },
           },
         ],

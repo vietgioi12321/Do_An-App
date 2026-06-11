@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import {Text} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
-import MonitorCard from 'components/MonitorCard';
-import * as Styles from '../config/commonStyle';
+import MonitorCard from '../MonitorCard';
+import * as Styles from '@/assets/styles/configStyle';
 
 export default function AppCounterScreen() {
   const [userApps, setUserApps] = useState<number>(0);
