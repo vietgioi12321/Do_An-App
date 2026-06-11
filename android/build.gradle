@@ -12,6 +12,11 @@ buildscript {
   }
 }
 
+// Thêm hoặc sửa khối ext ở đây nếu đã có sẵn:
+ext {
+    ndkVersion = "27.1.12297006"
+}
+
 allprojects {
   repositories {
     google()
